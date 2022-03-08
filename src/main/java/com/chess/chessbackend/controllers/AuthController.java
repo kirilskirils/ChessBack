@@ -51,18 +51,14 @@ public class AuthController
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
     {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername()));
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername()));
     }
 
     @PostMapping("/signup")
@@ -70,14 +66,10 @@ public class AuthController
     {
         if (userRepository.existsByUsername(signUpRequest.getUsername()))
         {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
         }
 
-        User user = new User(signUpRequest.getUsername(),
-                encoder.encode(signUpRequest.getPassword()));
-
+        User user = new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()));
 
         userRepository.save(user);
 
