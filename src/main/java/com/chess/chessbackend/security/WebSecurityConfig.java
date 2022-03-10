@@ -17,6 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.chess.chessbackend.security.jwt.AuthEntryPointJwt;
 import com.chess.chessbackend.security.jwt.AuthTokenFilter;
 import com.chess.chessbackend.security.services.UserDetailsServiceImpl;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -57,6 +60,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public CorsConfigurationSource corsConfiguration() {
+//        CorsConfiguration corsConfig = new CorsConfiguration();
+//        corsConfig.applyPermitDefaultValues();
+//        corsConfig.addAllowedOrigin("http://localhost:3000");
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", corsConfig);
+//        return source;
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
@@ -64,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-//                .antMatchers("/api/test/**").permitAll()
+                .antMatchers("/api/game/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

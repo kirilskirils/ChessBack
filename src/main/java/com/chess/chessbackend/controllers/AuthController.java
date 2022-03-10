@@ -28,7 +28,7 @@ import com.chess.chessbackend.repository.UserRepository;
 import com.chess.chessbackend.security.jwt.JwtUtils;
 import com.chess.chessbackend.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController

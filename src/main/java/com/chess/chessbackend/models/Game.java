@@ -1,12 +1,6 @@
 package com.chess.chessbackend.models;
 
-import net.bytebuddy.implementation.bind.annotation.Default;
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 
@@ -18,68 +12,68 @@ import javax.validation.constraints.Size;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        private Long first_player_id;
+        private Long firstPlayerId;
 
-        private Long second_player_id;
+        private Long secondPlayerId;
 
         @Column(columnDefinition = "varchar(50) default 'New'")
-        @Size(max = 100)
-        private String game_status;
+        @Size(max = 150)
+        private String gameStatus;
 
-        @Column(columnDefinition = "varchar(50) default 'FEN'")
-        @Size(max = 100)
-        private String game_state;
+        @Column(columnDefinition = "varchar(150)")
+        @Size(max = 150)
+        private String gameState;
 
         public Game()
         {
         }
 
-        public Game(Long first_player_id, Long second_player_id, String game_status,String game_state)
+        public Game(Long firstPlayerId, Long secondPlayerId, String gameStatus,String gameState)
         {
-            this.first_player_id = first_player_id;
-            this.second_player_id = second_player_id;
-            this.game_status = game_status;
-            this.game_state = game_state;
+            this.firstPlayerId = firstPlayerId;
+            this.secondPlayerId = secondPlayerId;
+            this.gameStatus = gameStatus;
+            this.gameState = gameState;
         }
 
-        public Long getSecond_player_id()
+        public Long getSecondPlayerId()
         {
-            return second_player_id;
+            return secondPlayerId;
         }
 
-        public void setSecond_player_id(Long second_player_id)
+        public void setSecondPlayerId(Long secondPlayerId)
         {
-            this.second_player_id = second_player_id;
+            this.secondPlayerId = secondPlayerId;
         }
 
-        public Long getFirst_player_id()
+        public Long getFirstPlayerId()
         {
-            return first_player_id;
+            return firstPlayerId;
         }
 
-        public void setFirst_player_id(Long first_player_id)
+        public void setFirstPlayerId(Long firstPlayerId)
         {
-            this.first_player_id = first_player_id;
+            this.firstPlayerId = firstPlayerId;
         }
 
-        public String getGame_status()
+        public String getGameStatus()
         {
-            return game_status;
+            return gameStatus;
         }
 
-        public void setGame_status(String game_status)
+        public void setGameStatus(String gameStatus)
         {
-            this.game_status = game_status;
+            this.gameStatus = gameStatus;
         }
 
-        public String getGame_state()
+        public String getGameState()
         {
-            return game_state;
+            return gameState;
         }
 
-        public void setGame_state(String game_state)
+        public void setGameState(String gameState)
         {
-            this.game_state = game_state;
+            this.gameState = gameState;
         }
     }
 

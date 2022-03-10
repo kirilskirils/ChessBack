@@ -20,12 +20,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint
 {
-
     private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException
     {
+//        System.out.println(request.get);
+        System.out.println(request.getRequestURI());
+        System.out.println(request.getPathInfo());
+        System.out.println(request.getHeader("Bearer"));
+        System.out.println(request.getAuthType());
+        System.out.println(request.getHeaderNames());
+//        System.out.println(request.get);
+        System.out.println(response.toString());
         logger.error("Unauthorized error: {}", authException.getMessage());
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
