@@ -2,10 +2,24 @@ package com.chess.chessbackend.payload.request;
 
 import javax.validation.constraints.NotNull;
 
-public class CreateGameRequest
+public class JoinGameRequest
 {
     @NotNull
+    private Long gameId;
+
+    @NotNull
     private String playerName;
+
+
+    public Long getGameId()
+    {
+        return gameId;
+    }
+
+    public void setGameId(Long gameId)
+    {
+        this.gameId = gameId;
+    }
 
     public String getPlayerName()
     {
@@ -16,9 +30,4 @@ public class CreateGameRequest
     {
         this.playerName = playerName;
     }
-
-    public CreateGameRequest(String player_name) {
-        this.player_name = player_name;
-    }
-
 }
