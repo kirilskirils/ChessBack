@@ -30,5 +30,10 @@ public class SignupRequest
     this.password = password;
   }
 
+public SignupRequest(String username, String password) {
+  this.username = username;
+  this.password = password;
+}
+
 
 }
