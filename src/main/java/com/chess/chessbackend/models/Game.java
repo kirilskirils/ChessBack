@@ -12,6 +12,16 @@ import javax.validation.constraints.Size;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
+
+        @OneToOne
+        @JoinColumn(name = "first_player_id")
+        private User firstPlayer;
+
+        @OneToOne
+        @JoinColumn(name = "second_player_id")
+        private User secondPlayer;
+
+
         private Long firstPlayerId;
 
         private Long secondPlayerId;
@@ -23,6 +33,11 @@ import javax.validation.constraints.Size;
         @Column(columnDefinition = "varchar(150)")
         @Size(max = 150)
         private String gameState;
+
+        public User getFirstPlayer()
+        {
+            return firstPlayer;
+        }
 
         public Game()
         {

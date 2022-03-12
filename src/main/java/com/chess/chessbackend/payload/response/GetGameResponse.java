@@ -2,37 +2,37 @@ package com.chess.chessbackend.payload.response;
 
 public class GetGameResponse
 {
-    private Long playerId;
-    private Long opponentId;
+    private Long firstPlayerId;
+    private Long secondPlayerId;
     private String gameState;
     private String gameStatus;
 
     public GetGameResponse(Long playerId, Long opponentId, String gameState, String gameStatus)
     {
-        this.playerId = playerId;
-        this.opponentId = opponentId;
+        this.firstPlayerId = playerId;
+        this.secondPlayerId = opponentId;
         this.gameState = gameState;
         this.gameStatus = gameStatus;
     }
 
-    public Long getPlayerId()
+    public Long getFirstPlayerId()
     {
-        return playerId;
+        return firstPlayerId;
     }
 
-    public void setPlayerId(Long playerId)
+    public void setFirstPlayerId(Long firstPlayerId)
     {
-        this.playerId = playerId;
+        this.firstPlayerId = firstPlayerId;
     }
 
-    public Long getOpponentId()
+    public Long getSecondPlayerId()
     {
-        return opponentId;
+        return secondPlayerId;
     }
 
-    public void setOpponentId(Long opponentId)
+    public void setSecondPlayerId(Long secondPlayerId)
     {
-        this.opponentId = opponentId;
+        this.secondPlayerId = secondPlayerId;
     }
 
     public String getGameStatus()

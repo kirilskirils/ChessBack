@@ -10,6 +10,7 @@ import com.chess.chessbackend.repository.GameRepository;
 import com.chess.chessbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,6 +43,7 @@ import com.chess.chessbackend.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*")
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/api/game")
 public class GameController
 {
@@ -68,7 +70,7 @@ public class GameController
 
         Optional<User> user = userRepository.findByUsername(joinGameRequest.getPlayerName());
 
-        if(game.getFirstPlayerId() != null && game.getSecondPlayerId() == null)
+        if (game.getFirstPlayerId() != null && game.getSecondPlayerId() == null)
         {
             game.setSecondPlayerId(user.get().getId());
             game.setGameStatus("READY");
@@ -84,9 +86,9 @@ public class GameController
         System.out.println("ID: " + id);
         Game game = gameRepository.getById(id);
 
-        if(gameRepository.existsById(id))
+        if (gameRepository.existsById(id))
         {
-            return ResponseEntity.ok(new GetGameResponse(game.getFirstPlayerId(),game.getSecondPlayerId(),game.getGameState(),game.getGameStatus()));
+            return ResponseEntity.ok(new GetGameResponse(game.getFirstPlayerId(), game.getSecondPlayerId(), game.getGameState(), game.getGameStatus()));
         }
         else
         {
@@ -96,6 +98,12 @@ public class GameController
 
     }
 
+    @GetMapping("/getall")
+    public ResponseEntity<?> getAllGames()
+    {
+        List<Game> gamesList = gameRepository.findAllBySecondPlayerIdIsNull();
+        return ResponseEntity.ok(gamesList);
+    }
 
 
 }
