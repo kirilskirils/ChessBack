@@ -2,9 +2,10 @@ package com.chess.chessbackend.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Optional;
 
 
-    @Entity
+@Entity
     @Table(name = "game")
     public class Game
     {
@@ -12,19 +13,13 @@ import javax.validation.constraints.Size;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-
-        @OneToOne
-        @JoinColumn(name = "first_player_id")
+        @ManyToOne
+        @JoinColumn(name = "first_user_id")
         private User firstPlayer;
 
-        @OneToOne
-        @JoinColumn(name = "second_player_id")
+        @ManyToOne
+        @JoinColumn(name = "second_user_id")
         private User secondPlayer;
-
-
-        private Long firstPlayerId;
-
-        private Long secondPlayerId;
 
         @Column(columnDefinition = "varchar(50) default 'New'")
         @Size(max = 150)
@@ -34,41 +29,21 @@ import javax.validation.constraints.Size;
         @Size(max = 150)
         private String gameState;
 
-        public User getFirstPlayer()
-        {
-            return firstPlayer;
-        }
+
+
 
         public Game()
         {
+
         }
 
-        public Game(Long firstPlayerId, Long secondPlayerId, String gameStatus,String gameState)
+        public Game(User firstPlayer, User secondPlayer, String gameStatus, String gameState)
         {
-            this.firstPlayerId = firstPlayerId;
-            this.secondPlayerId = secondPlayerId;
+            this.firstPlayer = firstPlayer;
+            this.secondPlayer = secondPlayer;
+
             this.gameStatus = gameStatus;
             this.gameState = gameState;
-        }
-
-        public Long getSecondPlayerId()
-        {
-            return secondPlayerId;
-        }
-
-        public void setSecondPlayerId(Long secondPlayerId)
-        {
-            this.secondPlayerId = secondPlayerId;
-        }
-
-        public Long getFirstPlayerId()
-        {
-            return firstPlayerId;
-        }
-
-        public void setFirstPlayerId(Long firstPlayerId)
-        {
-            this.firstPlayerId = firstPlayerId;
         }
 
         public String getGameStatus()
@@ -89,6 +64,26 @@ import javax.validation.constraints.Size;
         public void setGameState(String gameState)
         {
             this.gameState = gameState;
+        }
+
+        public User getSecondPlayer()
+        {
+            return secondPlayer;
+        }
+
+        public void setSecondPlayer(User secondPlayer)
+        {
+            this.secondPlayer = secondPlayer;
+        }
+
+        public User getFirstPlayer()
+        {
+            return firstPlayer;
+        }
+
+        public void setFirstPlayer(User firstPlayer)
+        {
+            this.firstPlayer = firstPlayer;
         }
     }
 

@@ -14,32 +14,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
-import com.chess.chessbackend.repository.GameRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.chess.chessbackend.models.User;
-import com.chess.chessbackend.payload.response.JwtResponse;
-import com.chess.chessbackend.payload.response.MessageResponse;
-import com.chess.chessbackend.repository.UserRepository;
-import com.chess.chessbackend.security.jwt.JwtUtils;
-import com.chess.chessbackend.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -57,12 +40,21 @@ public class GameController
     @PostMapping("/create")
     public ResponseEntity<?> createGame(@Valid @RequestBody CreateGameRequest gameRequest)
     {
-        Game game = new Game(userRepository.findByUsername(gameRequest.getPlayerName()).get().getId(), null, null, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-        gameRepository.save(game);
+        Optional<User> user = userRepository.findByUsername(gameRequest.getPlayerName());
+        if (user.isPresent())
+        {
+            Game game = new Game(user.get(), null, "CREATED", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
-        return ResponseEntity.ok(new MessageResponse("Game Created"));
+            gameRepository.save(game);
+            return ResponseEntity.ok(new MessageResponse("Game Created"));
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: User not found"));
+        }
+
     }
-
+//
     @PostMapping("/join")
     public ResponseEntity<?> createGame(@Valid @RequestBody JoinGameRequest joinGameRequest)
     {
@@ -70,14 +62,24 @@ public class GameController
 
         Optional<User> user = userRepository.findByUsername(joinGameRequest.getPlayerName());
 
-        if (game.getFirstPlayerId() != null && game.getSecondPlayerId() == null)
+        if(!user.isPresent())
         {
-            game.setSecondPlayerId(user.get().getId());
-            game.setGameStatus("READY");
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Failed getting user in joining request"));
         }
-        gameRepository.save(game);
 
-        return ResponseEntity.ok(new MessageResponse("Game Joined"));
+        if (game.getFirstPlayer() != null && game.getSecondPlayer() == null)
+        {
+            game.setSecondPlayer(user.get());
+            game.setGameStatus("READY");
+            gameRepository.save(game);
+            return ResponseEntity.ok(new MessageResponse("Game Joined"));
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Failed joining game"));
+
+        }
+
     }
 
     @GetMapping("/get/{id}")
@@ -88,7 +90,20 @@ public class GameController
 
         if (gameRepository.existsById(id))
         {
-            return ResponseEntity.ok(new GetGameResponse(game.getFirstPlayerId(), game.getSecondPlayerId(), game.getGameState(), game.getGameStatus()));
+            String username = null;
+            if(game.getSecondPlayer() != null)
+            {
+                username = game.getSecondPlayer().getUsername();
+            }
+            GetGameResponse response = new GetGameResponse(
+                    id,
+                    game.getFirstPlayer().getUsername(),
+                    username,
+                    game.getGameState(),
+                    game.getGameStatus()
+                );
+
+            return ResponseEntity.ok(response);
         }
         else
         {
