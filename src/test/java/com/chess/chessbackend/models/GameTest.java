@@ -21,31 +21,31 @@ class GameTest {
 //        Assertions.assertEquals(1l, game.getFirstPlayer().getId());
 //    }
 
-    @Test
-    void setFirst_player_id() {
-        game.setFirst_player_id(2l);
-        Assertions.assertEquals(2l, game.getFirst_player_id());
-    }
-
-    @Test
-    void getGame_status() {
-        Assertions.assertEquals("Status", game.getGame_status());
-    }
-
-    @Test
-    void setGame_status() {
-        game.setGame_status("Playing");
-        Assertions.assertEquals("Playing", game.getGame_status());
-    }
-
-    @Test
-    void getGame_state() {
-        Assertions.assertEquals("State", game.getGame_state());
-    }
-
-    @Test
-    void setGame_state() {
-        game.setGame_state("C7");
-        Assertions.assertEquals("C7", game.getGame_state());
-    }
+//    @Test
+//    void setFirst_player_id() {
+//        game.setFirst_player_id(2l);
+//        Assertions.assertEquals(2l, game.getFirst_player_id());
+//    }
+//
+//    @Test
+//    void getGame_status() {
+//        Assertions.assertEquals("Status", game.getGame_status());
+//    }
+//
+//    @Test
+//    void setGame_status() {
+//        game.setGame_status("Playing");
+//        Assertions.assertEquals("Playing", game.getGame_status());
+//    }
+//
+//    @Test
+//    void getGame_state() {
+//        Assertions.assertEquals("State", game.getGame_state());
+//    }
+//
+//    @Test
+//    void setGame_state() {
+//        game.setGame_state("C7");
+//        Assertions.assertEquals("C7", game.getGame_state());
+//    }
 }

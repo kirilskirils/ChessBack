@@ -1,11 +1,12 @@
 package com.chess.chessbackend.payload.response;
 
+import com.chess.chessbackend.payload.response.MessageResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class MessageResponseTest {
 
-    public MessageResponse MessageResponse = new MessageResponse("message");
+    public com.chess.chessbackend.payload.response.MessageResponse MessageResponse = new MessageResponse("message");
 
     @Test
     void getMessage() {

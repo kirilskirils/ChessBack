@@ -1,11 +1,12 @@
 package com.chess.chessbackend.payload.request;
 
+import com.chess.chessbackend.payload.request.SignupRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 
 class SignupRequestTest {
-    private SignupRequest SignupRequest = new SignupRequest("username", "password");
+    private com.chess.chessbackend.payload.request.SignupRequest SignupRequest = new SignupRequest();
 
     @Test
     void getUsername() {

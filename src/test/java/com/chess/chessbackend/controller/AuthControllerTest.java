@@ -1,4 +1,4 @@
-package com.chess.chessbackend.controllerTest;
+package com.chess.chessbackend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;

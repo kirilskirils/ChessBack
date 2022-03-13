@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 class UserTest {
 
-    private User user = new User("username", "password", 1l);
+    private User user = new User("username", "password");
 
     @Test
     void getId() {
