@@ -26,6 +26,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException
     {
 //        System.out.println(request.get);
+        System.out.println("KEK");
         System.out.println(request.getRequestURI());
         System.out.println(request.getPathInfo());
         System.out.println(request.getHeader("Bearer"));

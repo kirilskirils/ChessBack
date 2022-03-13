@@ -85,5 +85,15 @@ import java.util.Optional;
         {
             this.firstPlayer = firstPlayer;
         }
+
+        public Long getId()
+        {
+            return id;
+        }
+
+        public void setId(Long id)
+        {
+            this.id = id;
+        }
     }
 

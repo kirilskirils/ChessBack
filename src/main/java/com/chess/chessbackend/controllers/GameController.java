@@ -4,6 +4,7 @@ package com.chess.chessbackend.controllers;
 import com.chess.chessbackend.models.Game;
 import com.chess.chessbackend.models.User;
 import com.chess.chessbackend.payload.request.*;
+import com.chess.chessbackend.payload.response.GetAllGameResponse;
 import com.chess.chessbackend.payload.response.GetGameResponse;
 import com.chess.chessbackend.payload.response.MessageResponse;
 import com.chess.chessbackend.repository.GameRepository;
@@ -14,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.List;
@@ -26,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 @RequestMapping("/api/game")
 public class GameController
 {
@@ -54,7 +56,8 @@ public class GameController
         }
 
     }
-//
+
+
     @PostMapping("/join")
     public ResponseEntity<?> createGame(@Valid @RequestBody JoinGameRequest joinGameRequest)
     {
@@ -62,7 +65,7 @@ public class GameController
 
         Optional<User> user = userRepository.findByUsername(joinGameRequest.getPlayerName());
 
-        if(!user.isPresent())
+        if (!user.isPresent())
         {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Failed getting user in joining request"));
         }
@@ -85,13 +88,13 @@ public class GameController
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getGame(@PathVariable long id)
     {
-        System.out.println("ID: " + id);
+
         Game game = gameRepository.getById(id);
 
         if (gameRepository.existsById(id))
         {
             String username = null;
-            if(game.getSecondPlayer() != null)
+            if (game.getSecondPlayer() != null)
             {
                 username = game.getSecondPlayer().getUsername();
             }
@@ -101,7 +104,7 @@ public class GameController
                     username,
                     game.getGameState(),
                     game.getGameStatus()
-                );
+            );
 
             return ResponseEntity.ok(response);
         }
@@ -116,9 +119,27 @@ public class GameController
     @GetMapping("/getall")
     public ResponseEntity<?> getAllGames()
     {
-        List<Game> gamesList = gameRepository.findAllBySecondPlayerIdIsNull();
-        return ResponseEntity.ok(gamesList);
+        List<Game> gamesList = gameRepository.findAll();
+        List<GetAllGameResponse> gamesResponseList = new ArrayList<>();
+        for (Game game : gamesList)
+        {
+            String username = null;
+            if (game.getSecondPlayer() != null)
+            {
+                username = game.getSecondPlayer().getUsername();
+            }
+            gamesResponseList.add(new GetAllGameResponse(
+                    game.getId(),
+                    game.getFirstPlayer().getUsername(),
+                    username,
+                    game.getGameState(),
+                    game.getGameStatus()
+            ));
+        }
+        return ResponseEntity.ok(gamesResponseList);
     }
+
+
 
 
 }

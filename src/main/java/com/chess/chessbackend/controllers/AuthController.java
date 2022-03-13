@@ -39,9 +39,6 @@ public class AuthController
     @Autowired
     UserRepository userRepository;
 
-//    @Autowired
-//    GameRepository gameRepository;
-
     @Autowired
     PasswordEncoder encoder;
 
