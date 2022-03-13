@@ -31,7 +31,7 @@ class AuthControllerTest
     {
         // RUNNING SECOND TIME WILL GET ERROR BECAUSE USERNAME EXISTS
         Map<String,String> jsonMap = new HashMap<>();
-        jsonMap.put("username","usernameTEst"); //JSON VALUES FROM API REQUEST
+        jsonMap.put("username","usernameTEstxxx"); //JSON VALUES FROM API REQUEST
         jsonMap.put("password","password");
         String json = new ObjectMapper().writeValueAsString(jsonMap);
 
