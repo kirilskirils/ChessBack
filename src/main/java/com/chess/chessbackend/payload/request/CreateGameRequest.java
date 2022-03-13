@@ -17,4 +17,8 @@ public class CreateGameRequest
         this.playerName = playerName;
     }
 
+    public CreateGameRequest(String player_name) {
+        this.player_name = player_name;
+    }
+
 }
