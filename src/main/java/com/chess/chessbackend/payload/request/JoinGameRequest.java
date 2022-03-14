@@ -8,7 +8,7 @@ public class JoinGameRequest
     private Long gameId;
 
     @NotNull
-    private String playerName;
+    private Long playerId;
 
 
     public Long getGameId()
@@ -21,13 +21,13 @@ public class JoinGameRequest
         this.gameId = gameId;
     }
 
-    public String getPlayerName()
+    public Long getPlayerId()
     {
-        return playerName;
+        return playerId;
     }
 
-    public void setPlayerName(String playerName)
+    public void setPlayerId(Long playerId)
     {
-        this.playerName = playerName;
+        this.playerId = playerId;
     }
 }

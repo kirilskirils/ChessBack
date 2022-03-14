@@ -4,6 +4,7 @@ public class GetActiveGameRequest
 {
     private Long playerId;
 
+
     public Long getPlayerId()
     {
         return playerId;

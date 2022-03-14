@@ -5,17 +5,16 @@ import javax.validation.constraints.NotNull;
 public class CreateGameRequest
 {
     @NotNull
-    private String playerName;
+    private Long playerId;
 
-    public String getPlayerName()
+
+    public Long getPlayerId()
     {
-        return playerName;
+        return playerId;
     }
 
-    public void setPlayerName(String playerName)
+    public void setPlayerId(Long playerId)
     {
-        this.playerName = playerName;
+        this.playerId = playerId;
     }
-
-
 }

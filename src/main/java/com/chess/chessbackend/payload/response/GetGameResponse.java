@@ -3,14 +3,16 @@ package com.chess.chessbackend.payload.response;
 public class GetGameResponse
 {
     private Long gameId;
+    private Long firstPlayerId;
     private String playerName;
     private String opponentName;
     private String gameState;
     private String gameStatus;
 
-    public GetGameResponse(Long gameId, String playerName, String opponentName, String gameState, String gameStatus)
+    public GetGameResponse(Long gameId, Long firstPlayerId, String playerName, String opponentName, String gameState, String gameStatus)
     {
         this.gameId = gameId;
+        this.firstPlayerId = firstPlayerId;
         this.playerName = playerName;
         this.opponentName = opponentName;
         this.gameState = gameState;
@@ -66,6 +68,16 @@ public class GetGameResponse
     public void setOpponentName(String opponentName)
     {
         this.opponentName = opponentName;
+    }
+
+    public Long getFirstPlayerId()
+    {
+        return firstPlayerId;
+    }
+
+    public void setFirstPlayerId(Long firstPlayerId)
+    {
+        this.firstPlayerId = firstPlayerId;
     }
 }
 
