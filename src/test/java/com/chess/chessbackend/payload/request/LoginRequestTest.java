@@ -1,12 +1,11 @@
 package com.chess.chessbackend.payload.request;
 
-import com.chess.chessbackend.payload.request.LoginRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class LoginRequestTest {
-    private LoginRequest loginRequest = new LoginRequest();
+    private final LoginRequest loginRequest = new LoginRequest();
 
     @BeforeEach
     void setUp() {

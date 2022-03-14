@@ -5,11 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long>
 {
     boolean existsById(Long id);
-    List<Game> findAllBySecondPlayerIdIsNull();
+    Optional<Game> findGameByFirstPlayerId(Long id);
+    Optional<Game> findGameBySecondPlayerId(Long id);
     List<Game> findAll();
 }

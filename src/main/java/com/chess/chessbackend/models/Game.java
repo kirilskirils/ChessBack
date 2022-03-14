@@ -13,12 +13,12 @@ import java.util.Optional;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @ManyToOne
-        @JoinColumn(name = "first_user_id")
+        @OneToOne(optional = false)
+        @JoinColumn(name = "first_player_id", nullable = false)
         private User firstPlayer;
 
-        @ManyToOne
-        @JoinColumn(name = "second_user_id")
+        @OneToOne
+        @JoinColumn(name = "second_player_id", unique = true)
         private User secondPlayer;
 
         @Column(columnDefinition = "varchar(50) default 'New'")

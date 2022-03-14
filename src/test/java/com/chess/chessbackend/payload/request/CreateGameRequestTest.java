@@ -1,15 +1,12 @@
 package com.chess.chessbackend.payload.request;
 
-import com.chess.chessbackend.payload.request.CreateGameRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CreateGameRequestTest {
 
-
-
-    private CreateGameRequest createGameRequest = new CreateGameRequest();
+    private final CreateGameRequest createGameRequest = new CreateGameRequest();
 
     @BeforeEach
     void setUp() {
