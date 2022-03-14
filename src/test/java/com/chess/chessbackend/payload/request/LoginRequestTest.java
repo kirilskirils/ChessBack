@@ -12,11 +12,11 @@ class LoginRequestTest {
 //        Assertions.assertEquals("Username", LoginRequest.getUsername());
 //    }
 //
-//    @Test
-//    void setUsername() {
-//        LoginRequest.setUsername("Uldis");
-//        Assertions.assertEquals("Uldis", LoginRequest.getUsername());
-//    }
+    @Test
+    void setUsername() {
+        loginRequest.setUsername("Uldis");
+        Assertions.assertEquals("Uldis", loginRequest.getUsername());
+    }
 //
 //    @Test
 //    void getPassword() {

@@ -4,9 +4,7 @@ package com.chess.chessbackend.controllers;
 import com.chess.chessbackend.models.Game;
 import com.chess.chessbackend.models.User;
 import com.chess.chessbackend.payload.request.*;
-import com.chess.chessbackend.payload.response.GetAllGameResponse;
-import com.chess.chessbackend.payload.response.GetGameResponse;
-import com.chess.chessbackend.payload.response.MessageResponse;
+import com.chess.chessbackend.payload.response.*;
 import com.chess.chessbackend.repository.GameRepository;
 import com.chess.chessbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +43,12 @@ public class GameController
         Optional<User> user = userRepository.findByUsername(gameRequest.getPlayerName());
         if (user.isPresent())
         {
-            Game game = new Game(user.get(), null, "CREATED", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            Game game = new Game(user.get(), null, "AWAITING OPPONENT", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
-            gameRepository.save(game);
-            return ResponseEntity.ok(new MessageResponse("Game Created"));
+            var ent = gameRepository.save(game);
+//            System.out.println();
+
+            return ResponseEntity.ok(new CreateGameResponse(ent.getId()));
         }
         else
         {
@@ -59,7 +59,7 @@ public class GameController
 
 
     @PostMapping("/join")
-    public ResponseEntity<?> createGame(@Valid @RequestBody JoinGameRequest joinGameRequest)
+    public ResponseEntity<?> joinGame(@Valid @RequestBody JoinGameRequest joinGameRequest)
     {
         Game game = gameRepository.getById(joinGameRequest.getGameId());
 
@@ -73,13 +73,31 @@ public class GameController
         if (game.getFirstPlayer() != null && game.getSecondPlayer() == null)
         {
             game.setSecondPlayer(user.get());
-            game.setGameStatus("READY");
+            game.setGameStatus("ONGOING");
             gameRepository.save(game);
             return ResponseEntity.ok(new MessageResponse("Game Joined"));
         }
         else
         {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Failed joining game"));
+
+        }
+
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteGame(@Valid @RequestBody DeleteGameRequest deleteGameRequest)
+    {
+        Optional<Game> game = gameRepository.findGameByFirstPlayerId(deleteGameRequest.getPlayerId());
+
+        if (game.isPresent())
+        {
+            gameRepository.delete(game.get());
+            return ResponseEntity.ok(new MessageResponse("Game Deleted"));
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Failed deleting game"));
 
         }
 
@@ -138,6 +156,30 @@ public class GameController
         }
         return ResponseEntity.ok(gamesResponseList);
     }
+
+
+    @GetMapping("/getActive")
+    public ResponseEntity<?> getActiveGame(@RequestParam(name = "playerId") Long playerId)
+    {
+        Optional<Game> game = gameRepository.findGameByFirstPlayerId(playerId);
+        Optional<Game> game2 = gameRepository.findGameBySecondPlayerId(playerId);
+        if(game.isPresent())
+        {
+            return ResponseEntity.ok(new GetActiveGameResponse(game.get().getId()));
+
+        }
+        else if(game2.isPresent())
+        {
+            return ResponseEntity.ok(new GetActiveGameResponse(game2.get().getId()));
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Game not found"));
+        }
+
+
+    }
+
 
 
 
