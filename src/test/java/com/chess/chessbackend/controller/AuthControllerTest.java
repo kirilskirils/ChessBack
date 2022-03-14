@@ -50,7 +50,7 @@ class AuthControllerTest
     public void signIn() throws Exception
     {
         Map<String,String> jsonMap = new HashMap<>();
-        jsonMap.put("username","usernameTEstxxx"); //JSON VALUES FROM API REQUEST
+        jsonMap.put("username","username1"); //JSON VALUES FROM API REQUEST
         jsonMap.put("password","password");
         String json = new ObjectMapper().writeValueAsString(jsonMap);
 

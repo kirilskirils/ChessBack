@@ -10,17 +10,17 @@ class CreateGameRequestTest {
 
     @BeforeEach
     void setUp() {
-        createGameRequest.setPlayerName("username");
+        createGameRequest.setPlayerId(1L);
     }
 
     @Test
     void getPlayer_name() {
-        Assertions.assertEquals("username", createGameRequest.getPlayerName());
+        Assertions.assertEquals(1, createGameRequest.getPlayerId());
     }
 
-    @Test
-    void setPlayer_name() {
-        createGameRequest.setPlayerName("Karlis");
-        Assertions.assertEquals("Karlis", createGameRequest.getPlayerName());
-    }
+//    @Test
+//    void setPlayer_name() {
+//        createGameRequest.setPlayerName("Karlis");
+//        Assertions.assertEquals("Karlis", createGameRequest.getPlayerName());
+//    }
 }

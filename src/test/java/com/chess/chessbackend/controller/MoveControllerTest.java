@@ -32,11 +32,13 @@ class MoveControllerTest
     {
         Map<String,String> jsonMap = new HashMap<>();
         MockMvc mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        jsonMap.put("gameId", "3");
+        jsonMap.put("gameId", "16");
         jsonMap.put("fen", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        String json = new ObjectMapper().writeValueAsString(jsonMap);
+
         String uri = "/api/move/makemove";
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
-                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(json)).andReturn();
 
         int status = mvcResult.getResponse().getStatus();
         Assertions.assertEquals(200, status);
