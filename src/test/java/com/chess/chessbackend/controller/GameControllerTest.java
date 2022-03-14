@@ -44,20 +44,39 @@ class GameControllerTest
     @Test
     public void getGame() throws Exception
     {
+        MockMvc mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        String uri = "/api/game/get/1";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
+        int status = mvcResult.getResponse().getStatus();
+        Assertions.assertEquals(200, status);
+        String content = mvcResult.getResponse().getContentAsString();
+        System.out.println(content);
     }
     //POST
     @Test
     public void joinGame() throws Exception
     {
+        Map<String,String> jsonMap = new HashMap<>();
+        MockMvc mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        jsonMap.put("gameId", "1");
+        jsonMap.put("playerName", "usernameTEstxxx");
+        String uri = "/api/game/join";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
+        int status = mvcResult.getResponse().getStatus();
+        Assertions.assertEquals(200, status);
+        String content = mvcResult.getResponse().getContentAsString();
+        System.out.println(content);
     }
     //POST
     @Test
     public void createGame() throws Exception
     {
         Map<String,String> jsonMap = new HashMap<>();
-        jsonMap.put("playerName","username");
+        jsonMap.put("playerName","first1");
         String json = new ObjectMapper().writeValueAsString(jsonMap);
 
         MockMvc mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();

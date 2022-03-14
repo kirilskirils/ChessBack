@@ -49,7 +49,20 @@ class AuthControllerTest
     @Test
     public void signIn() throws Exception
     {
+        Map<String,String> jsonMap = new HashMap<>();
+        jsonMap.put("username","usernameTEstxxx"); //JSON VALUES FROM API REQUEST
+        jsonMap.put("password","password");
+        String json = new ObjectMapper().writeValueAsString(jsonMap);
 
+        MockMvc mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        String uri = "/api/auth/signin"; // API URL
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(json)).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assertions.assertEquals(200, status);
+        String content = mvcResult.getResponse().getContentAsString();
+        System.out.println(content);
     }
 
 }

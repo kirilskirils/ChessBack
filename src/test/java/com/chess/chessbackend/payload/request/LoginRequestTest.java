@@ -1,31 +1,37 @@
 package com.chess.chessbackend.payload.request;
 
-import com.chess.chessbackend.payload.request.LoginRequest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class LoginRequestTest {
-    private LoginRequest loginRequest = new LoginRequest();
+    private final LoginRequest loginRequest = new LoginRequest();
 
-//    @Test
-//    void getUsername() {
-//        Assertions.assertEquals("Username", LoginRequest.getUsername());
-//    }
-//
+    @BeforeEach
+    void setUp() {
+        loginRequest.setUsername("username");
+        loginRequest.setPassword("qwerty123");
+    }
+
+    @Test
+    void getUsername() {
+        Assertions.assertEquals("username", loginRequest.getUsername());
+    }
+
     @Test
     void setUsername() {
         loginRequest.setUsername("Uldis");
         Assertions.assertEquals("Uldis", loginRequest.getUsername());
     }
-//
-//    @Test
-//    void getPassword() {
-//        Assertions.assertEquals("Password", LoginRequest.getPassword());
-//    }
-//
-//    @Test
-//    void setPassword() {
-//        LoginRequest.setPassword("Abc777");
-//        Assertions.assertEquals("Abc777", LoginRequest.getPassword());
-//    }
+
+    @Test
+    void getPassword() {
+        Assertions.assertEquals("qwerty123", loginRequest.getPassword());
+    }
+
+    @Test
+    void setPassword() {
+        loginRequest.setPassword("Abc777");
+        Assertions.assertEquals("Abc777", loginRequest.getPassword());
+    }
 }

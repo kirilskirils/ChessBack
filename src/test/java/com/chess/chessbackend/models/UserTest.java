@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 class UserTest {
 
-    private User user = new User("username", "password");
+    private User user = new User("Username", "Password");
 
     @Test
     void getId() {
-        Assertions.assertEquals(1l, user.getId());
+        Assertions.assertEquals(null, user.getId());
     }
 
     @Test
