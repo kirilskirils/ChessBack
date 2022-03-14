@@ -10,7 +10,7 @@ class MessageResponseTest {
 
     @Test
     void getMessage() {
-        Assertions.assertEquals("Username", MessageResponse.getMessage());
+        Assertions.assertEquals("message", MessageResponse.getMessage());
     }
 
     @Test

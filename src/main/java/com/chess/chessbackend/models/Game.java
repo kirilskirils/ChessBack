@@ -29,9 +29,6 @@ import java.util.Optional;
         @Size(max = 150)
         private String gameState;
 
-
-
-
         public Game()
         {
 

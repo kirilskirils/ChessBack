@@ -2,15 +2,23 @@ package com.chess.chessbackend.payload.request;
 
 import com.chess.chessbackend.payload.request.CreateGameRequest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CreateGameRequestTest {
 
+
+
     private CreateGameRequest createGameRequest = new CreateGameRequest();
+
+    @BeforeEach
+    void setUp() {
+        createGameRequest.setPlayerName("username");
+    }
 
     @Test
     void getPlayer_name() {
-        Assertions.assertEquals("name", createGameRequest.getPlayerName());
+        Assertions.assertEquals("username", createGameRequest.getPlayerName());
     }
 
     @Test
