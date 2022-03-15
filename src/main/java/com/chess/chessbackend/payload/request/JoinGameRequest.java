@@ -8,7 +8,7 @@ public class JoinGameRequest
     private Long gameId;
 
     @NotNull
-    private Long playerId;
+    private Long userId;
 
 
     public Long getGameId()
@@ -21,13 +21,13 @@ public class JoinGameRequest
         this.gameId = gameId;
     }
 
-    public Long getPlayerId()
+    public Long getUserId()
     {
-        return playerId;
+        return userId;
     }
 
-    public void setPlayerId(Long playerId)
+    public void setUserId(Long userId)
     {
-        this.playerId = playerId;
+        this.userId = userId;
     }
 }

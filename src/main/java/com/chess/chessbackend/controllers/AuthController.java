@@ -45,6 +45,11 @@ public class AuthController
     @Autowired
     JwtUtils jwtUtils;
 
+    /**
+     * POST for signin
+     * @param loginRequest request body
+     * @return Response body with JWT token, user id and username
+     */
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
     {
@@ -58,6 +63,11 @@ public class AuthController
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername()));
     }
 
+    /**
+     * POST for sign up
+     * @param signUpRequest request body
+     * @return Response message with success or failure
+     */
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest)
     {

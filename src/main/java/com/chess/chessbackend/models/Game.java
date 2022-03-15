@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 @Table(name = "game")
 public class Game
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

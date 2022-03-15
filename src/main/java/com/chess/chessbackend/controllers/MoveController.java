@@ -34,6 +34,11 @@ public class MoveController
     @Autowired
     GameRepository gameRepository;
 
+    /**
+     * POST for making a move
+     * @param moveRequest request body
+     * @return response body with success or failure message
+     */
     @PostMapping("/makemove")
     public ResponseEntity<?> makeMove(@RequestBody MakeMoveRequest moveRequest)
     {
@@ -43,7 +48,6 @@ public class MoveController
             game.setGameState(moveRequest.getFen());
             gameRepository.save(game);
             return ResponseEntity.ok(new MessageResponse("Move success"));
-
         }
 
         return ResponseEntity.badRequest().body(new MessageResponse("Error: problem making a move"));

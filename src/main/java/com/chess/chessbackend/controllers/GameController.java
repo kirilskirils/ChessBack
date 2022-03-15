@@ -32,17 +32,21 @@ public class GameController
     @Autowired
     UserRepository userRepository;
 
-
+    /**
+     * POST for creating new game
+     * @param createGameRequest request body
+     * @return id of created game or error message
+     */
     @PostMapping("/create")
     public ResponseEntity<?> createGame(@Valid @RequestBody CreateGameRequest createGameRequest)
     {
-        Optional<User> user = userRepository.findById(createGameRequest.getPlayerId());
+        System.out.println(createGameRequest.getUserId());
+        Optional<User> user = userRepository.findById(createGameRequest.getUserId());
         if (user.isPresent())
         {
-            Game game = new Game(user.get(), null, null ,"AWAITING OPPONENT", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            Game game = new Game  (user.get(), null, null ,"AWAITING OPPONENT", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
             var ent = gameRepository.save(game);
-//            System.out.println();
 
             return ResponseEntity.ok(new CreateGameResponse(ent.getId()));
         }
@@ -54,11 +58,16 @@ public class GameController
     }
 
 
+    /**
+     * POST for joining game
+     * @param joinGameRequest request body
+     * @return Response message with success or failure
+     */
     @PostMapping("/join")
     public ResponseEntity<?> joinGame(@Valid @RequestBody JoinGameRequest joinGameRequest)
     {
         Optional<Game> gameOptional= gameRepository.findById(joinGameRequest.getGameId());
-        Optional<User> userOptional = userRepository.findById(joinGameRequest.getPlayerId());
+        Optional<User> userOptional = userRepository.findById(joinGameRequest.getUserId());
         Game game = new Game();
         User user = new User();
         if (!userOptional.isPresent())
@@ -95,6 +104,12 @@ public class GameController
 
     }
 
+    //FIXME: DELETE METHOD INSTEAD OF POST
+    /**
+     * POST for deleting game
+     * @param deleteGameRequest request body
+     * @return Response message with success or failure
+     */
     @PostMapping("/delete")
     public ResponseEntity<?> deleteGame(@Valid @RequestBody DeleteGameRequest deleteGameRequest)
     {
@@ -113,6 +128,11 @@ public class GameController
 
     }
 
+    /**
+     * GET for getting specific GAME
+     * @param id id of game
+     * @return returns game response body
+     */
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getGame(@PathVariable long id)
     {
@@ -133,24 +153,11 @@ public class GameController
 
     }
 
-    private GetGameResponse getGame(Game game)
-    {
-        String username = null;
-        if (game.getSecondPlayer() != null)
-        {
-            username = game.getSecondPlayer().getUsername();
-        }
-        GetGameResponse response = new GetGameResponse(
-                game.getId(),
-                game.getWhitePlayerId(),
-                game.getFirstPlayer().getUsername(),
-                username,
-                game.getGameState(),
-                game.getGameStatus()
-        );
-        return response;
-    }
 
+    /**
+     * GET mapping for retuning all games
+     * @return response with all games
+     */
     @GetMapping("/getall")
     public ResponseEntity<?> getAllGames()
     {
@@ -175,6 +182,11 @@ public class GameController
     }
 
 
+    /**
+     * GET mapping for return current active game of player
+     * @param playerId player id
+     * @return game response
+     */
     @GetMapping("/getActive")
     public ResponseEntity<?> getActiveGame(@RequestParam(name = "playerId") Long playerId)
     {
@@ -198,8 +210,24 @@ public class GameController
         {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Game not found"));
         }
+    }
 
-
+    private GetGameResponse getGame(Game game)
+    {
+        String username = null;
+        if (game.getSecondPlayer() != null)
+        {
+            username = game.getSecondPlayer().getUsername();
+        }
+        GetGameResponse response = new GetGameResponse(
+                game.getId(),
+                game.getWhitePlayerId(),
+                game.getFirstPlayer().getUsername(),
+                username,
+                game.getGameState(),
+                game.getGameStatus()
+        );
+        return response;
     }
 
 
